@@ -3,14 +3,14 @@
 #1_standardize_gff
 
 Ce code permet de standardizer des gff.
-Pour cella il est nécessaire d'avoir un gff préexistant. Il est aussi possible d'ajouter un fichier chromosome.txt en entrée pour de garder que les chromosomes voulu.
-Ce fichier doit se présenté sous la forme suivante:
+Pour cella il est nÃ©cessaire d'avoir un gff prÃ©existant. Il est aussi possible d'ajouter un fichier chromosome.txt en entrÃ©e pour de garder que les chromosomes voulu.
+Ce fichier doit se prÃ©sentÃ© sous la forme suivante:
 
 Chr1
 Chr2
 ...
 
-Il Faut au préalable prendre en compte la notation des chromosomes dans le gff
+Il Faut au prÃ©alable prendre en compte la notation des chromosomes dans le gff
 
 
 #2_LiftOn
@@ -36,4 +36,4 @@ Il Faut au préalable prendre en compte la notation des chromosomes dans le gff
 
 
 
-7_Vérif_gff
+7_VÃ©rif_gff
