@@ -1,0 +1,12 @@
+[workspace]
+channels = ["conda-forge"]
+name = "6_Orthofinder_post_script"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+pandas = ">=3.0.2,<4"
+matplotlib = ">=3.10.9,<4"
+python-dateutil = ">=2.9.0.post0,<3"
