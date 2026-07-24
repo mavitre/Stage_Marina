@@ -20,6 +20,9 @@ echo "Input  : $INPUT_DIR"
 echo "Output : $OUTPUT_DIR"
 echo "Threads: $THREADS"
  
-pixi run orthofinder -f "$INPUT_DIR" -o "$OUTPUT_DIR" -t "$THREADS" -a "$THREADS"
+pixi run orthofinder -d -f "$INPUT_DIR" -o "$OUTPUT_DIR" -t "$THREADS" -a "$THREADS" #avec cds
+
+#pixi run orthofinder -f "$INPUT_DIR" -o "$OUTPUT_DIR" -t "$THREADS" -a "$THREADS" #avec proteines
+
  
 echo "=== Fin : $(date) ==="
