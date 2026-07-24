@@ -11,12 +11,6 @@ génomique, puis vérifie :
   - que la séquence commence par un codon start (ATG)
   - que la séquence se termine par un codon stop
  
-Sorties:
-  - <prefix>_non_multiple3.txt  : ARNm dont le CDS fusionné n'est pas multiple de 3
-  - <prefix>_multi_stop.txt     : ARNm avec plus d'un codon stop interne
-  - <prefix>_no_start.txt       : ARNm dont le CDS ne commence pas par ATG
-  - <prefix>_no_stop_end.txt    : ARNm dont le CDS ne se termine pas par un codon stop
- 
 Dépendance: pip install biopython
 """
 import sys
