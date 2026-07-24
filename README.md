@@ -44,10 +44,12 @@ Il est conseillé de le lancer en sbatch afin de pouvoir donner une mémoire suf
 
 ## 2_LiftOn
 
-
+LiftOn est un outil de lift-over basé sur l'homologie qui intègre des alignements ADN et protéiques pour améliorer la précision de l'annotation à l'échelle du génome, permettant le transfert d'annotations entre espèces relativement distantes. Il s'appuie sur Liftoff et miniprot, et utilise un algorithme de maximisation des protéines pour choisir les meilleurs cadres de lecture ouverts et résoudre les loci géniques chevauchants.
 
 
 ## 3_EGAPx
+
+EGAPx est la version publique du pipeline d'annotation du génome eucaryote du NCBI. Il prend en entrée un fichier FASTA d'assemblage, un taxid de l'organisme, et des données RNA-seq. En fonction du taxid, EGAPx sélectionne automatiquement les ensembles de protéines et les modèles HMM appropriés. Le pipeline utilise miniprot pour aligner les séquences protéiques, STAR pour les lectures RNA-seq courtes, et minimap2 pour les lectures longues, avant de transmettre ces alignements à Gnomon pour la prédiction de gènes
 
 Pour pouvoir lancer EGAPx il est nécessaire d'avoir la bonne version de nextflow. IL n'est pas possible de mettre le nextflow dans pixi il faut donc lancer :
 ````
@@ -55,15 +57,33 @@ NXF_VER=23.10.1 nextflow -version
 ````
 en ligne de commande dans la console du cluster.
 
+Pour pouvoir faire l'annotation il faut remplir un fichier .yaml d'entrée qui est constitué comme ceci:
+
+````
+genome: path/to/genome
+taxid: trouvable via ce lien : https://www.ncbi.nlm.nih.gov/taxonomy
+short_reads: données RNA-seq disponible sur ce lien https://www.ncbi.nlm.nih.gov/sra
+ - SRR8506572
+ - SRR9005248
+cmsearch:
+  enabled: false
+trnascan:
+  enabled: false
+````
+
 
 ## 4_helixer
 
-
+Helixer est un outil ab initio de prédiction de gènes qui produit des modèles géniques précis pour des génomes fongiques, végétaux, vertébrés et invertébrés. Helixer nécessite seulement l'assemblage du génome en fasta, ce qui le rend applicable à une grande diversité d'espèces. Il combine des réseaux de neurones profonds et un modèle de Markov caché pour produire directement des modèles de gènes primaires au format GFF3
 
 
 ## 5_Orthofinder
 
+OrthoFinder est un outil d'inférence d'orthologues conçu pour identifier les gènes orthologues entre plusieurs espèces avec une grande précision.
 
+Script pour recupéré seulement les cds (ou protéines) grâce aux gff produit et leurs fichiers fasta.
+
+Scirpt pour lancer orthofinder
 
 ## 6_Post_Orthofinder
 
@@ -84,4 +104,33 @@ Options :
     --min N      nombre minimum de gènes par espèce (défaut = 1)
     --max N      nombre maximum de gènes par espèce (défaut = valeur de --min, donc exact par défaut)
     --output F   fichier de sortie (liste des Orthogroup IDs), défaut = orthogroups_1gene.txt
+
+
+## 7_verif_gff
+
+### search_cds_stop_3.py
+
+Pour chaque ARNm (transcrit), fusionne tous ses blocs CDS dans l'ordre
+génomique, puis vérifie :
+  - que la longueur totale est multiple de 3
+  - qu'il n'y a pas plus d'un codon stop dans la séquence traduite
+  - que la séquence commence par un codon start (ATG)
+  - que la séquence se termine par un codon stop
+
+Se lance avec la commande : 
+````
+python validate_cds.py genome.fasta annotation.gff prefix
+````
+Pour prefix : donner le nom de l'espèce pour nommer le fichier de sortie
+
+### remove_defective.py
+
+Supprime tous les mRNA défectueux SAUF ceux qui :
+  - ont uniquement un problème d'abscence de codon STOP final
+  - ET une longueur > 200 nt
+
+````
+Usage: python filter_gff_bad_cds.py annotation.gff3 defective_mrna.tsv filtered.gff3
+````
+defective_mrna.tsv est la sortie de search_cds_stop_3.py
 
