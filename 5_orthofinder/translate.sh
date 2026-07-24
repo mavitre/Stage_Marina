@@ -11,4 +11,7 @@ GFF=$1
 FASTA=$2
 OUTPUT=$3
 
-agat_sp_extract_sequences.pl -g GFF -f FASTA -p -o OUTPUT
+agat_sp_extract_sequences.pl -g GFF -f FASTA -t cds -o OUTPUT # pour cds seulement
+
+#agat_sp_extract_sequences.pl -g GFF -f FASTA -p -o OUTPUT # pour protéines
+
