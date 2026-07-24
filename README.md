@@ -87,6 +87,10 @@ Scirpt pour lancer orthofinder
 
 ## 6_Post_Orthofinder
 
+### list_orthogroups.py
+
+Les Orthogroups sont trouvé à partir du fichier Orthogroups.GeneCount.tsv dans le dossier Orthogroups.
+
 Extraction des orthogroupes selon un nombre de gènes par espèce,
 DANS CHACUNE des espèces sélectionnées par l'utilisateur.
 
@@ -106,7 +110,29 @@ Options :
     --output F   fichier de sortie (liste des Orthogroup IDs), défaut = orthogroups_1gene.txt
 
 
+### fetch_orthogroups_sequences.py
+
+Récupère les séquences fasta (dossier "Orthogroup_Sequences" d'OrthoFinder)
+correspondant à une liste d'orthogroupes, et les copie dans un dossier de sortie.
+
+Usage :
+    python fetch_orthogroups_sequences.py <dossier_resultats_orthofinder> sortie_de_list_orthogroups.txt
+
+    -> Cherche automatiquement le dossier "Orthogroup_Sequences" dans l'arborescence
+       (ex: Results_Mmm01/Orthogroup_Sequences/), puis copie les fichiers
+       OGxxxxxxx.fa correspondant aux identifiants listés dans orthogroups_1gene.txt
+       vers un dossier de sortie.
+
+Options :
+    --output D   dossier de sortie où copier les fasta (défaut : orthogroups_sequences_extraites)
+
+
+
 ## 7_verif_gff
+
+### AGAT
+
+agat_convert_sp_gxf2gxf.pl -g infile.gff [ -o outfile ]
 
 ### search_cds_stop_3.py
 
@@ -117,7 +143,7 @@ génomique, puis vérifie :
   - que la séquence commence par un codon start (ATG)
   - que la séquence se termine par un codon stop
 
-Se lance avec la commande : 
+Se lance avec la commande :
 ````
 python validate_cds.py genome.fasta annotation.gff prefix
 ````
@@ -133,4 +159,3 @@ Supprime tous les mRNA défectueux SAUF ceux qui :
 Usage: python filter_gff_bad_cds.py annotation.gff3 defective_mrna.tsv filtered.gff3
 ````
 defective_mrna.tsv est la sortie de search_cds_stop_3.py
-
